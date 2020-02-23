@@ -31,12 +31,12 @@ Index vertex_for_edge(Lookup &lookup, VertexList &vertices, Index first, Index s
 }
 
 TriangleList subdivide(VertexList &vertices,
-                       TriangleList triangles) {
+                       const TriangleList &triangles) {
   Lookup lookup;
   TriangleList result;
 
   for (auto &&each:triangles) {
-    std::array<Index, 3> mid;
+    std::array<Index, 3> mid{};
     for (int edge = 0; edge < 3; ++edge) {
       mid[edge] = vertex_for_edge(lookup, vertices,
                                   each.vertex[edge], each.vertex[(edge + 1) % 3]);

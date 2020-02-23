@@ -30,14 +30,14 @@ const float X = .525731112119133606f;
 const float Z = .850650808352039932f;
 const float N = 0.f;
 
-static const VertexList vertices =
+static const VertexList vertices = // NOLINT(cert-err58-cpp)
     {
         {-X, N, Z}, {X, N, Z}, {-X, N, -Z}, {X, N, -Z},
         {N, Z, X}, {N, Z, -X}, {N, -Z, X}, {N, -Z, -X},
         {Z, X, N}, {-Z, X, N}, {Z, -X, N}, {-Z, -X, N}
     };
 
-static const TriangleList triangles =
+static const TriangleList triangles = // NOLINT(cert-err58-cpp)
     {
         {0, 4, 1}, {0, 9, 4}, {9, 5, 4}, {4, 5, 8}, {4, 8, 1},
         {8, 10, 1}, {8, 3, 10}, {5, 3, 8}, {5, 2, 3}, {2, 7, 3},
@@ -46,7 +46,7 @@ static const TriangleList triangles =
     };
 
 Index vertex_for_edge(Lookup &lookup, VertexList &vertices, Index first, Index second);
-TriangleList subdivide(VertexList &vertices, TriangleList triangles);
+TriangleList subdivide(VertexList &vertices, const TriangleList &triangles);
 IndexedMesh make_icosphere(int subdivisions);
 v3 get_normal(const VertexList &vl, const Triangle &tri);
 }
