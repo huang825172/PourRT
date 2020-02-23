@@ -1,5 +1,5 @@
 [requires]
-sdl2/2.0.10@bincrafters/stable
+sdl2/2.0.8@bincrafters/stable
 khronos-opencl-headers/20190806@bincrafters/stable
 khronos-opencl-clhpp/20191105@bincrafters/stable
 

@@ -2,9 +2,10 @@
 // Created by huang825172 on 2020/2/22.
 //
 
-#define __CL_ENABLE_EXCEPTIONS
+#define CL_HPP_ENABLE_EXCEPTIONS
+#define CL_HPP_TARGET_OPENCL_VERSION 220
 
-#include <CL/cl.hpp>
+#include <CL/cl2.hpp>
 #include <SDL.h>
 
 #include <iostream>
@@ -27,13 +28,15 @@ float D2R(float degree) {
 int main() {
   const int screen_width = 640;
   const int screen_height = 480;
-
-  SDL_Window *window = nullptr;
+  SDL_Window *window;
   SDL_Renderer *renderer;
   SDL_Texture *texture;
   SDL_Event event;
   bool sdl_quit = false;
-  if (SDL_Init(SDL_INIT_VIDEO) < 0) return -1;
+  if (SDL_Init(SDL_INIT_VIDEO) != 0){
+    std::cout << SDL_GetError() << std::endl;
+    return -1;
+  }
   window = SDL_CreateWindow(
 	  "PRT",
 	  SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED,
@@ -44,7 +47,6 @@ int main() {
   renderer = SDL_CreateRenderer(window, -1, 0);
   texture = SDL_CreateTexture(renderer, SDL_PIXELFORMAT_RGBA8888,
 							  SDL_TEXTUREACCESS_STREAMING, screen_width, screen_height);
-
   const auto kernel_file = "RT.c";
   const float fov = 90;
   auto ray_set = std::vector<Ray>(screen_width * screen_height);
@@ -123,8 +125,7 @@ int main() {
 	std::ifstream sourceFile(kernel_file);
 	std::string sourceCode(std::istreambuf_iterator<char>(sourceFile),
 						   (std::istreambuf_iterator<char>()));
-	cl::Program::Sources source(1, std::make_pair(sourceCode.c_str(),
-												  sourceCode.length() + 1));
+	cl::Program::Sources source = {sourceCode};
 	cl::Program program = cl::Program(context, source);
 	try {
 	  program.build(devices);
