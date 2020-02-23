@@ -1,4 +1,4 @@
-#PourRT
+# PourRT
 
 Simple OpenCL accelerated ray tracing demo.
 
