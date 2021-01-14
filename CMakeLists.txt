@@ -10,6 +10,8 @@ ELSE ()
 	MESSAGE(WARNING "The file conanbuildinfo.cmake doesn't exist, you have to run conan install first")
 ENDIF ()
 
+INCLUDE_DIRECTORIES(include)
+
 IF (${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
 	SET(OpenCLLib "-framework OpenCL")
 	SET(SDLLib "-framework AudioToolbox -framework CoreAudio -framework Carbon")
